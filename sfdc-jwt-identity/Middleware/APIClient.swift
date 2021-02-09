@@ -20,6 +20,7 @@ struct APIClient {
             .dataTaskPublisher(for: request) // 3
             .tryMap { result -> Response<T> in
                 let value = try JSONDecoder().decode(T.self, from: result.data) // 4
+                print(value)
                 return Response(value: value, response: result.response) // 5
             }
             .receive(on: DispatchQueue.main) // 6

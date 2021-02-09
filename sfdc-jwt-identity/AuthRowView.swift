@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct AuthRowView: View {
+    public let authRow: AuthModel
+    
+    init(authRow: AuthModel) {
+        print("Staring AuthRowView init()")
+        self.authRow = authRow
+        print("Finished AuthRowView init()")
+    }
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(authRow.access_token ?? "no access token")
+        }
     }
 }
 
-struct AuthRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthRowView()
-    }
-}
+
+//struct AuthRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AuthRowView()
+//    }
+//}
