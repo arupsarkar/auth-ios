@@ -16,6 +16,34 @@ class UserViewModel: ObservableObject {
     private var task: AnyCancellable?
 
 
+    func register(userModel: UserModel,
+                    registerCompletionHandler: @escaping (UserResponse?, Error?) -> Void ) {
+        print("NEW USER EMAIL : \(userModel.Email)")
+        var registerURL: String
+        registerURL = "https://sfdc-jwt.herokuapp.com/jwt/register"
+        let url = URL(string: registerURL)
+        guard let requestUrl = url else { fatalError() }
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let userRecord = UserModel(Username: userModel.Username, Lastname: userModel.Lastname, Firstname: userModel.Firstname, Email: userModel.Email, Alias: userModel.Alias, TimezoneSidKey: userModel.TimezoneSidKey, LocaleSidKey: userModel.LocaleSidKey, EmailEncodingKey: userModel.EmailEncodingKey, LanguageLocaleKey: userModel.LanguageLocaleKey, ProfileId: userModel.ProfileId)
+        
+        let jsonData = try? JSONEncoder().encode(userRecord)
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
+            do {
+                let decoder = JSONDecoder()
+                let jsonDict = try decoder.decode(UserResponse.self, from: data!)
+                registerCompletionHandler(jsonDict, nil)
+            } catch let parseErr {
+                print("JSON Parsing Error", parseErr)
+                registerCompletionHandler(nil, parseErr)
+            }
+        })
+        task.resume()
+        
+    }
     
     func registerNewUser(userModel: UserModel, token: String, instance_url: String) {
         print("Starting to create new User")

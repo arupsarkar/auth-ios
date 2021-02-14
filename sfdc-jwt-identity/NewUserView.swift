@@ -94,10 +94,15 @@ struct NewUserView: View {
             .foregroundColor(.white)
             .cornerRadius(30)
         }
+
+            Image("background-login")
+                .clipShape(Circle())
+                .shadow(radius: 10)
+                .overlay(Circle().stroke(Color.red, lineWidth: 5))
     }
 }
 
-struct NewUserView_Previews: PreviewProvider {
+struct NewUserView_Previews: PreviewProvider {    
     @State static var token = ""
     @State static var instance_url = ""
     static var previews: some View {

@@ -11,7 +11,8 @@ import SwiftUI
 struct sfdc_jwt_identityApp: App {
     var body: some Scene {
         WindowGroup {
-            AuthView()
+            //AuthView()
+            LoginView()
         }
     }
 }
