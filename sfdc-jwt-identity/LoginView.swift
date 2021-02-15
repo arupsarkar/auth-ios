@@ -20,94 +20,126 @@ struct LoginView: View {
     @State private var button_title = "Sign In"
     @State var timeRemaining = 10
     @State private var showingNewUserSignUpView = false
+    @State private var isShowingHomeView = false
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    
+    // This will store the subject, token and instance_url
+    @AppStorage("subject") var subject_Store: String = "No subject"
+    @AppStorage("token") var token_store: String = "No Token"
+    @AppStorage("instance_url") var instanceUrl_Store: String = "No Instance URL"
 
     
     var body: some View {
-        VStack(){
-            Text("Welcome to zootopia !!!")
-                .font(.largeTitle).foregroundColor(Color.white)
-                .padding([.top, .bottom], 40)
-                .shadow(radius: 10.0, x: 20, y: 10)
-            
-            Image("zootopia-logo")
-                .resizable()
-                .frame(width: 250, height: 250)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                .shadow(radius: 10.0, x: 20, y: 10)
-                .padding(.bottom, 50)
-            
-            VStack(alignment: .leading, spacing: 15) {
-                TextField("Username", text: self.$username)
-                    .padding()
-                    .background(Color.gray)
-                    .cornerRadius(20.0)
-                    .shadow(radius: 10.0, x: 20, y: 10)
-                
-            }
-            .padding([.leading, .trailing], 27.5)
-            // end of VStack
-            
-            
-            Button(action: {
-                self.button_title = " Aye Aye Captain, on it !!!"
-                self.authViewModel.fetchAuthAttributes(subject: username, authCompletionHandler: { (auth, error) in
-                    if let auth = auth {
-                        print(" ux received access _token : \(auth.access_token) ")
-                        self.token = auth.access_token
-                        if(self.token != nil) {
-                            self.status = "Enter now at peace !!!"
-                            //self.button_title = "I did my job well !!!"
-                        }else {
-                            print("Access token is nil")
-                        }
-                        
+        if(isShowingHomeView) {
+            NavigationView {
+                VStack {
+                    NavigationLink(destination: HomePageView()) {
+                        Text("My Contacts")
+                            .font(.headline)
+                            .fontWeight(.light)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color.blue)
+                            .cornerRadius(15.0)
+                            .shadow(radius: 10.0, x: 20, y: 10)
                     }
-                    self.button_title = "Sign In"
-                })
-            }) {
-                Text(self.button_title)
-                    .font(.headline)
-                    .fontWeight(.light)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(width: 300, height: 50)
-                    .background(Color.green)
-                    .cornerRadius(15.0)
+                }// end of VStack
+                .navigationBarTitle(Text("Home"))
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        } else {
+            VStack(){
+                Text("Welcome to zootopia !!!")
+                    .font(.largeTitle).foregroundColor(Color.white)
+                    .padding([.top, .bottom], 40)
                     .shadow(radius: 10.0, x: 20, y: 10)
-            }.padding(.top, 50)
-            Spacer()
-            HStack {
-                Text("Do not have an account ?")
-                    .fontWeight(.regular)
-                    .foregroundColor(Color.white)
                 
-                Button(action: {
-                    print("Sign Up")
-                    showingNewUserSignUpView.toggle()
-                }, label: {
-                    Text("Sign Up")
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.white)
-                })
-                .sheet(isPresented: $showingNewUserSignUpView) {
-                    NewUserSignUpView()
+                Image("zootopia-logo")
+                    .resizable()
+                    .frame(width: 250, height: 250)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                    .shadow(radius: 10.0, x: 20, y: 10)
+                    .padding(.bottom, 50)
+                
+                VStack(alignment: .leading, spacing: 15) {
+                    if(!isShowingHomeView) {
+                        TextField("Username", text: self.$username)
+                            .padding()
+                            .background(Color.gray)
+                            .cornerRadius(20.0)
+                            .shadow(radius: 10.0, x: 20, y: 10)
+                    }
                 }
-            } //end of HStack
-        }//end of VStack
-        .background(
-            Image("background-login")
-                .resizable()
-                //.aspectRatio(geometry.size, contentMode: .fill)
-                .overlay(TintOverlay().opacity(0.55))
-                .edgesIgnoringSafeArea(.all)
-        )
-        //Text("v1.0 : \(String((self.token?.suffix(4) ?? "No token")))")
-        Text("v1.0 : \(self.status)")
-    }
+                .padding([.leading, .trailing], 27.5)
+
+                if(!isShowingHomeView) {
+                    Button(action: {
+                        self.button_title = " Aye Aye Captain, on it !!!"
+                        self.authViewModel.fetchAuthAttributes(subject: username, authCompletionHandler: { (auth, error) in
+                            if let auth = auth {
+                                print(" ux received access _token : \(auth.access_token) ")
+                                self.token = auth.access_token
+                                if(self.token != nil) {
+                                    self.status = "Welcome Home !!!"
+                                    self.button_title = "Welcome Home ->"
+                                    self.token_store = auth.access_token
+                                    self.instanceUrl_Store =  auth.instance_url
+                                    self.subject_Store = username
+                                    self.isShowingHomeView.toggle()
+
+                                }else {
+                                    print("Access token is nil")
+                                }
+                                
+                            }
+
+                        })
+                    }) {
+                        Text(self.button_title)
+                            .font(.headline)
+                            .fontWeight(.light)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color.green)
+                            .cornerRadius(15.0)
+                            .shadow(radius: 10.0, x: 20, y: 10)
+                    }.padding(.top, 50) //Button end
+                }
+
+                
+                Spacer()
+                HStack {
+                    Text("Do not have an account ?")
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.white)
+                    
+                    Button(action: {
+                        print("Sign Up")
+                        showingNewUserSignUpView.toggle()
+                    }, label: {
+                        Text("Sign Up")
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.white)
+                    })
+                    .sheet(isPresented: $showingNewUserSignUpView) {
+                        NewUserSignUpView()
+                    }
+                } //end of HStack
+            }//end of VStack
+            .background(
+                Image("background-login")
+                    .resizable()
+                    //.aspectRatio(geometry.size, contentMode: .fill)
+                    .overlay(TintOverlay().opacity(0.55))
+                    .edgesIgnoringSafeArea(.all)
+            )
+            //Text("v1.0 : \(String((self.token?.suffix(4) ?? "No token")))")
+            //Text("v1.0 : \(self.status)")
+        }
+        } //end if
+
 }
 
 struct LoginView_Previews: PreviewProvider {
@@ -204,7 +236,15 @@ struct NewUserSignUpView: View {
             .padding([.top, .trailing], 30)
             .disabled(signUpButtonDisabled)
             Spacer()
-            Text("{record_id : \(self.response)}")
+            Text("After sign up, follow instructions in your email. {record_id : \(self.response)}")
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .font(.system(size: 10))
+                .padding()
+                .foregroundColor(.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.white, lineWidth: 2)
+                )
         }
         .background(
             Image("signup-image2")

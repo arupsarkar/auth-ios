@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E25250C325D8EAC300E2EFD2 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25250C225D8EAC300E2EFD2 /* HomePageView.swift */; };
+		E25250C825DA033D00E2EFD2 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25250C725DA033D00E2EFD2 /* Contact.swift */; };
+		E25250CD25DA047900E2EFD2 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25250CC25DA047900E2EFD2 /* ContactsViewModel.swift */; };
 		E2B1DC2725D06B6900B141B7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1DC2625D06B6900B141B7 /* User.swift */; };
 		E2B1DC2C25D06D7E00B141B7 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1DC2B25D06D7E00B141B7 /* UserViewModel.swift */; };
 		E2B1DC3925D0741900B141B7 /* NewUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1DC3825D0741900B141B7 /* NewUserView.swift */; };
@@ -46,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		E25250C225D8EAC300E2EFD2 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		E25250C725DA033D00E2EFD2 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		E25250CC25DA047900E2EFD2 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		E2B1DC2625D06B6900B141B7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2B1DC2B25D06D7E00B141B7 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E2B1DC3825D0741900B141B7 /* NewUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserView.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E9F8D125CA4D1900AEA9A9 /* Auth.swift */,
+				E25250C725DA033D00E2EFD2 /* Contact.swift */,
 				E2B1DC2625D06B6900B141B7 /* User.swift */,
 			);
 			path = Model;
@@ -186,6 +191,7 @@
 			children = (
 				E2E9F8DF25CA521400AEA9A9 /* AuthViewModel.swift */,
 				E2B1DC2B25D06D7E00B141B7 /* UserViewModel.swift */,
+				E25250CC25DA047900E2EFD2 /* ContactsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -321,11 +327,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2E9F8E025CA521400AEA9A9 /* AuthViewModel.swift in Sources */,
+				E25250CD25DA047900E2EFD2 /* ContactsViewModel.swift in Sources */,
 				E25250C325D8EAC300E2EFD2 /* HomePageView.swift in Sources */,
 				E2B1DC3925D0741900B141B7 /* NewUserView.swift in Sources */,
 				E2E9F8FC25CB997400AEA9A9 /* AuthRowView.swift in Sources */,
 				E2E9F8A325CA3A9000AEA9A9 /* AuthView.swift in Sources */,
 				E2B1DC2C25D06D7E00B141B7 /* UserViewModel.swift in Sources */,
+				E25250C825DA033D00E2EFD2 /* Contact.swift in Sources */,
 				E2E9F8A125CA3A9000AEA9A9 /* sfdc_jwt_identityApp.swift in Sources */,
 				E2B1DC2725D06B6900B141B7 /* User.swift in Sources */,
 				E2E9F8D725CA4EFD00AEA9A9 /* AuthResponse.swift in Sources */,

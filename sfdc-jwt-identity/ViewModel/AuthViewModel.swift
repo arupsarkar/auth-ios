@@ -4,7 +4,6 @@
 //
 //  Created by Arup Sarkar on 2/2/21.
 //
-import SwiftUI
 import Foundation
 import Combine
 
@@ -19,10 +18,6 @@ class AuthViewModel: ObservableObject {
     @Published var id: String?
     @Published var token_type: String?
     
-    @AppStorage("token") var token_store: String = "No Token"
-    @AppStorage("instance_url") var instanceUrl_Store: String = "No Instance URL"
-
-    
     func fetchAuthAttributes(subject: String, authCompletionHandler: @escaping (AuthModel?, Error?) -> Void ) {
         var registerURL: String
         registerURL = "https://sfdc-jwt.herokuapp.com/jwt/sfdc-token?subject=" + subject
@@ -34,8 +29,6 @@ class AuthViewModel: ObservableObject {
             do {
                 let decoder = JSONDecoder()
                 let jsonDict = try decoder.decode(AuthModel.self, from: data)
-                self.token_store = jsonDict.access_token
-                self.instanceUrl_Store =  jsonDict.instance_url
                 authCompletionHandler(jsonDict, nil)
             } catch let parseErr {
                 print("JSON Parsing Error", parseErr)
